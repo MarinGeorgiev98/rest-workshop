@@ -1,10 +1,10 @@
-package com.endava.superhero;
+package com.superhero.superhero;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SuperHeroApplicationTests {
+class SuperheroApplicationTests {
 
 	@Test
 	void contextLoads() {
