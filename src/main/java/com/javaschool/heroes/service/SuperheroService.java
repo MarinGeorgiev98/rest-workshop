@@ -16,5 +16,5 @@ public interface SuperheroService {
 
     public void delete(long id);
 
-    Optional<Superhero> getHeroById(long id) throws SuperheroNotFoundException;
+    Superhero getHeroById(long id) throws SuperheroNotFoundException;
 }

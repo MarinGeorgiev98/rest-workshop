@@ -4,9 +4,7 @@ import com.javaschool.heroes.exception.SuperheroNotFoundException;
 import com.javaschool.heroes.model.Superhero;
 import com.javaschool.heroes.model.dto.SuperheroDto;
 import com.javaschool.heroes.repository.SuperheroRepository;
-import net.bytebuddy.implementation.bind.annotation.Super;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +34,14 @@ public class SuperheroServiceImpl implements SuperheroService {
     }
 
     @Override
-    public Optional<Superhero> getHeroById(long id) throws SuperheroNotFoundException {
-        return repository.findById(id);
+    public Superhero getHeroById(long id) throws SuperheroNotFoundException {
+        Optional<Superhero> optionalHero = repository.findById(id);
+        Superhero hero = null;
+        if (optionalHero.isPresent()) {
+            hero = optionalHero.get();
+        } else {
+            throw new SuperheroNotFoundException("The superhero does not exist!");
+        }
+        return hero;
     }
 }

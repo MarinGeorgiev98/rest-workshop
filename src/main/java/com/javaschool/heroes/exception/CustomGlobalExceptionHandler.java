@@ -1,6 +1,5 @@
 package com.javaschool.heroes.exception;
 
-import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

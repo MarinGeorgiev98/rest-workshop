@@ -26,25 +26,21 @@ public class SuperheroController {
     }
 
     @PutMapping("/delete/{id}")
-    public ResponseEntity<SuperheroDto> deleteHeroById(@PathVariable(value = "id") long id) {
+    public ResponseEntity<SuperheroDto> deleteHeroById(@PathVariable(value = "id") long id) throws SuperheroNotFoundException {
+
+        Superhero hero = superheroService.getHeroById(id);
+
+        SuperheroDto mappedDto = modelMapper.map(hero, SuperheroDto.class);
+
         superheroService.delete(id);
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/hero/{id}")
     public ResponseEntity<SuperheroDto> getHeroById(@PathVariable(value = "id") long id) throws SuperheroNotFoundException {
-        Superhero hero = null;
-        SuperheroDto mappedDto = null;
+        Superhero hero = superheroService.getHeroById(id);
 
-        Optional<Superhero> optionalHero = superheroService.getHeroById(id);
-        if (optionalHero.isPresent()) {
-            hero = optionalHero.get();
-            mappedDto = modelMapper.map(hero, SuperheroDto.class);
-        } else {
-            throw new SuperheroNotFoundException("The superhero does not exist!");
-        }
-
-
+        SuperheroDto mappedDto = modelMapper.map(hero, SuperheroDto.class);
         return ResponseEntity.ok(mappedDto);
     }
 

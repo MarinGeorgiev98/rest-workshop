@@ -3,9 +3,7 @@ package com.javaschool.heroes.model.dto;
 import com.javaschool.heroes.exception.validator.DateValid;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
-import java.time.LocalDate;
 
 public class SuperheroDto {
 
