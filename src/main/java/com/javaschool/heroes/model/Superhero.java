@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.GenerationType;
-import java.time.LocalDate;
 
 @Entity(name = "superhero")
 public class Superhero {
@@ -17,7 +16,7 @@ public class Superhero {
     public Superhero() {
     }
 
-    public Superhero(long id, String firstName, String lastName, String superheroName, String email, LocalDate birthDay) {
+    public Superhero(long id, String firstName, String lastName, String superheroName, String email, String birthDay) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -33,7 +32,7 @@ public class Superhero {
         return email;
     }
 
-    public LocalDate getBirthDay() {
+    public String getBirthDay() {
         return birthDay;
     }
 
@@ -50,12 +49,12 @@ public class Superhero {
         this.email = email;
     }
 
-    public void setBirthDay(LocalDate birthDay) {
+    public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
     }
 
     @Column
-    private LocalDate birthDay;
+    private String birthDay;
 
     public long getId() {
         return id;

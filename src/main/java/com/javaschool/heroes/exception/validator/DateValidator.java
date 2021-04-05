@@ -10,11 +10,14 @@ public class DateValidator implements ConstraintValidator<DateValid, String> {
     @Override
     public boolean isValid(String dateString, ConstraintValidatorContext constraintValidatorContext) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-DD");
+        LocalDate birthDay = null;
+        LocalDate today = null;
         try {
-            LocalDate.parse(dateString, dateFormatter);
+            birthDay = LocalDate.parse(dateString, dateFormatter);
+            today = LocalDate.now();
         } catch (DateTimeParseException e) {
-            return false;
+            e.printStackTrace();
         }
-        return true;
+        return birthDay != null && today.isAfter(birthDay);
     }
 }

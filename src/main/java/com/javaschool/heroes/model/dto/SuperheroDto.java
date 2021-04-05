@@ -1,11 +1,8 @@
 package com.javaschool.heroes.model.dto;
 
 import com.javaschool.heroes.exception.validator.DateValid;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
@@ -15,7 +12,7 @@ public class SuperheroDto {
     public SuperheroDto() {
     }
 
-    public SuperheroDto(String firstName, String lastName, String superheroName, String email, LocalDate birthday) {
+    public SuperheroDto(String firstName, String lastName, String superheroName, String email, String birthday) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.superheroName = superheroName;
@@ -36,9 +33,8 @@ public class SuperheroDto {
     @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
     private String email;
 
-    @Past
     @DateValid
-    private LocalDate birthday;
+    private String birthday;
 
 
     public String getFirstName() {
@@ -69,11 +65,11 @@ public class SuperheroDto {
         this.email = email;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
-    public LocalDate getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
