@@ -1,6 +1,7 @@
 package com.example.superHero.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Past;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -30,20 +32,15 @@ public class Superhero {
     @NotNull
     private String superheroName;
 
+    @NotBlank(message = "email is mandatory")
     private String email;
 
-    public Superhero(String firstName, String lastName, String superheroName){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.superheroName = superheroName;
-    }
+    @Past
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthday;
 
     public Superhero() {
 
-    }
-
-    public Superhero(SuperheroDTO superheroDTO){
-        this(superheroDTO.firstName, superheroDTO.lastName, superheroDTO.superHeroName);
     }
 
 }

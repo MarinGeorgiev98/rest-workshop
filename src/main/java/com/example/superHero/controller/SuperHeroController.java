@@ -1,19 +1,12 @@
 package com.example.superHero.controller;
 
-import com.example.superHero.SuperHeroNotFoundException;
-import com.example.superHero.SuperHeroService;
-import com.example.superHero.model.Superhero;
-import com.example.superHero.model.SuperheroDTO;
+import com.example.superHero.dto.SuperheroDTO;
+import com.example.superHero.exception.SuperHeroNotFoundException;
+import com.example.superHero.service.SuperHeroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -21,7 +14,7 @@ import javax.validation.Valid;
 @RequestMapping("/superHeroes")
 public class SuperHeroController {
 
-    SuperHeroService superHeroService;
+    private final SuperHeroService superHeroService;
 
     @Autowired
     public SuperHeroController(SuperHeroService superHeroService) {
@@ -29,15 +22,22 @@ public class SuperHeroController {
     }
 
     @GetMapping("/hero/{id}")
-    public Superhero getById(@PathVariable long id) {
-        return superHeroService.getSuperHeroById(id);
+    public SuperheroDTO getById(@PathVariable long id) {
+        var superhero = superHeroService.getSuperHeroById(id);
+        if (!superhero.isPresent()) {
+            throw new SuperHeroNotFoundException(id);
+        }
+        return SuperheroDTO.superheroDTOFromSuperhero(superhero.get());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<SuperheroDTO> createHero(@Valid @RequestBody SuperheroDTO superHeroDTO) {
-        Superhero superhero = new Superhero(superHeroDTO);
-        superHeroService.createHero(superhero);
+        var superhero = SuperheroDTO.superheroFromSuperHeroDTO(superHeroDTO);
+        var resultSuperHero = superHeroService.createHero(superhero);
+        if (resultSuperHero == null) {
+            throw new SuperHeroNotFoundException(superhero.getId());
+        }
         return ResponseEntity.ok(superHeroDTO);
     }
 }

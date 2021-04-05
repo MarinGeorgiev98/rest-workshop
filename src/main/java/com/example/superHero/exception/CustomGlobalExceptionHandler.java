@@ -1,4 +1,4 @@
-package com.example.superHero;
+package com.example.superHero.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(SuperHeroNotFoundException.class)
-    public ResponseEntity<Object> handleCityNotFoundException(
+    public ResponseEntity<Object> handleSuperheroNotFoundException(
             SuperHeroNotFoundException exception, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
